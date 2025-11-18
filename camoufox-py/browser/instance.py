@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from playwright.sync_api import TimeoutError, Error as PlaywrightError  # 导入特定的Playwright异常
 from utils.logger import setup_logging
 from utils.cookie_handler import convert_cookie_editor_to_playwright
+from utils.keep_alive import keep_alive_task
 from browser.navigation import handle_successful_navigation
 from camoufox.sync_api import Camoufox
 
@@ -234,6 +235,10 @@ def run_browser_instance(config):
 
                 # --- If all checks pass, we assume success ---
                 logger.info("所有验证通过，确认已成功登录。")
+                
+                # 启动keepAlive任务
+                keep_alive_task(page, logger, config)
+                
                 handle_successful_navigation(page, logger, cookie_file_config)
             elif "accounts.google.com/v3/signin/accountchooser" in final_url:
                 logger.warning("检测到Google账户选择页面。登录失败或Cookie已过期。")

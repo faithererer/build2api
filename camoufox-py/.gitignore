@@ -44,7 +44,7 @@ htmlcov/
 .ipynb_checkpoints/
 
 # config files
-config.yaml
+
 
 # cookies/
 cookies/*.json
