@@ -14,6 +14,7 @@ def keep_alive_task(page, logger, config):
     interval = keep_alive_config.get('interval', 3600)  # 默认1小时
     search_query = keep_alive_config.get('search_query', 'hello')
     cookie_file = config.get('cookie_file', 'unknown')
+    context = page.context
     
     def perform_search():
         while True:
@@ -21,10 +22,14 @@ def keep_alive_task(page, logger, config):
                 time.sleep(interval)
                 logger.info(f"[{cookie_file}] 执行keepAlive搜索任务...")
                 
-                # 执行Google搜索
+                # 创建新标签页进行搜索
+                search_page = context.new_page()
                 search_url = f"https://www.google.com/search?q={search_query}"
-                page.goto(search_url, timeout=30000)
-                page.wait_for_timeout(2000)  # 等待2秒
+                search_page.goto(search_url, timeout=30000)
+                search_page.wait_for_timeout(2000)  # 等待2秒
+                
+                # 关闭搜索标签页
+                search_page.close()
                 
                 logger.info(f"[{cookie_file}] keepAlive搜索完成")
                 

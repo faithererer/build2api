@@ -1,0 +1,48 @@
+# 全局设置，将应用于所有实例，除非在特定实例中被覆盖
+global_settings:
+  # 无头模式: true (标准无头), false (有头), or 'virtual' (虚拟显示, Linux使用)
+  headless: virtual
+  
+  # 全局代理 (可选)。如果大多数实例都使用同一个代理，请在这里设置。
+  # 格式: "http://user:pass@host:port"
+  proxy:
+    server: "http://gw.dataimpulse.com:10000"
+    username: "c4d842605295368b19db__cr.us"
+    password: "a8e09169555eda48"
+    bypass: "localhost,127.0.0.1,::1,*.local"
+#   proxy:
+#     server: 'gw.dataimpulse.com:10000'
+#     username: 'c4d842605295368b19db__cr.us'
+#     password: 'a8e09169555eda48'
+ 
+ # 强烈建议添加此项, 修复 "LeakWarning" 并防止IP泄露
+  geoip: true
+  
+  # Cookie保活设置 (可选)
+  keep_alive:
+    enabled: true
+    interval: 3600  # 间隔时间(秒), 默认1小时
+    search_query: "hello"  # 搜索关键词
+# 要并发运行的浏览器实例列表
+instances:
+  # 实例 1: 使用全局设置
+  - cookie_file: "11-09-lyk747655@gmail.com.json"
+    # 自动连接本地websocket的Build链接
+    url: "https://ai.studio/apps/drive/12RpYv4BpEKVXWqCPbaMcrBYJ3a2Diqh6"
+    proxy:
+      server: "http://gw.dataimpulse.com:10004"
+      username: "c4d842605295368b19db__cr.us"
+      password: "a8e09169555eda48"
+      bypass: "localhost,127.0.0.1,::1,*.local"
+
+  # 实例 2: 覆盖全局设置，使用自己的代理并以有头模式运行
+  # - cookie_file: "user2_cookie.json"
+  #   # 实例2想要打开的Build demo的链接, 一般复制上方一样的即可.
+  #   url: "https://some-other-website.com/"
+  #   headless: false # 覆盖全局设置，此实例将显示浏览器窗口, 可选
+  #   proxy: "http://user:pass@specific-proxy.com:9999" # 使用特定代理, 可选
+
+  # 实例 3: 另一个使用全局设置的例子
+  # - cookie_file: "user3_cookie.json"
+  #   url: "https://some-other-website.com/"
+    # 此处未指定 headless 或 proxy，因此它将使用 global_settings 中的值
