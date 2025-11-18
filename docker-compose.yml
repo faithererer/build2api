@@ -1,0 +1,13 @@
+services:
+  camoufox:
+    build: .
+    ports:
+      - "5345:5345"
+    environment:
+      # 设置一个你最终Gemini服务的API密钥
+      - AUTH_API_KEY=sk-123456zjc
+    volumes:
+      - ./camoufox-py/config.yaml:/app/config.yaml
+      - ./camoufox-py/cookies:/app/cookies
+      - ./camoufox-py/logs:/app/logs
+    restart: always

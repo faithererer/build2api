@@ -1,0 +1,53 @@
+# Python Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Editor/IDE specific (customize as needed)
+# IntelliJ IDEA / PyCharm
+.idea/
+# IntelliJ IDEA module files
+*.iml
+# VS Code
+.vscode/
+# Sublime Text
+*.sublime-project
+# Sublime Text
+*.sublime-workspace
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Distribution and packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Jupyter Notebook (if applicable)
+.ipynb_checkpoints/
+
+# config files
+config.yaml
+
+# cookies/
+cookies/*.json
+
+# logs
+logs/
