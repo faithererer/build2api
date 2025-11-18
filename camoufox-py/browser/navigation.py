@@ -1,6 +1,7 @@
 import time
 import os
 from playwright.sync_api import Page, expect
+from utils.keep_alive import check_keep_alive
 
 def handle_untrusted_dialog(page: Page, logger=None):
     """
@@ -22,7 +23,7 @@ def handle_untrusted_dialog(page: Page, logger=None):
     except Exception as e:
         logger.info(f"检查弹窗时发生意外：{e}，将继续执行...")
 
-def handle_successful_navigation(page: Page, logger, cookie_file_config):
+def handle_successful_navigation(page: Page, logger, cookie_file_config, keep_alive_data=None):
     """
     在成功导航到目标页面后，执行后续操作（处理弹窗、截图、保持运行）。
     """
@@ -45,9 +46,20 @@ def handle_successful_navigation(page: Page, logger, cookie_file_config):
         logger.error(f"截屏时出错: {e}")
         
     logger.info("实例将保持运行状态。每10秒点击一次页面以保持活动。")
+    
+    # 解包keepAlive数据
+    next_run = None
+    if keep_alive_data:
+        next_run, interval, search_query, cookie_file = keep_alive_data
+    
     while True:
         try:
             page.click('body')
+            
+            # 检查是否需要执行keepAlive
+            if next_run and keep_alive_data:
+                next_run = check_keep_alive(page, logger, next_run, interval, search_query, cookie_file)
+            
             time.sleep(10)
         except Exception as e:
             logger.error(f"在保持活动循环中出错: {e}")

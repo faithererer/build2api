@@ -237,9 +237,9 @@ def run_browser_instance(config):
                 logger.info("所有验证通过，确认已成功登录。")
                 
                 # 启动keepAlive任务
-                keep_alive_task(page, logger, config)
+                keep_alive_data = keep_alive_task(page, logger, config)
                 
-                handle_successful_navigation(page, logger, cookie_file_config)
+                handle_successful_navigation(page, logger, cookie_file_config, keep_alive_data)
             elif "accounts.google.com/v3/signin/accountchooser" in final_url:
                 logger.warning("检测到Google账户选择页面。登录失败或Cookie已过期。")
                 page.screenshot(path=os.path.join(screenshot_dir, f"FAIL_chooser_click_failed_{cookie_file_config}.png"))
